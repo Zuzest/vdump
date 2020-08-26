@@ -2,8 +2,8 @@
 подключаем файл function.php в начало проекта
 ```php
 <?php
-if (is_readable(путь до файла.'/function.php')) {
-  require_once путь до файла.'/function.php';
+if (is_readable(путь до файла.'/vdump.php')) {
+  require_once путь до файла.'/vdump.php';
 }
 vdump(__DIR__);
 vdump($_POST, $_GET, 'да вообще что угодно', new Exception(), ['sasa',5,6=>'six','ping'=>'понг']);
