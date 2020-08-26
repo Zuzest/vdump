@@ -10,3 +10,5 @@ vdump($_POST, $_GET, 'да вообще что угодно', new Exception(), [
 ```
 и используем vdump($var,$var1,$var2,....)
 радуемся
+
+![](https://github.com/Zuzest/vdump/blob/master/vdump.png "пример вывода функции")
