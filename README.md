@@ -1,5 +1,5 @@
 # vdump
-подключаем файл function.php в начало проекта
+подключаем файл vdump.php в начало проекта
 ```php
 <?php
 if (is_readable(путь до файла.'/vdump.php')) {
