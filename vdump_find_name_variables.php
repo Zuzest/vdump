@@ -8,7 +8,7 @@
  */
 function vdump_find_name_variables($string, $function_name) {
     preg_match('~'.$function_name."\((.*)\)~", $string, $sa);
-    $string = $sa[1];
+    $string = $sa[1] ?? $string;
 
     $delimiter    = [','];
     $open_quotes  = ['\'', '"', '(', '['];

@@ -40,7 +40,7 @@ function vdump_file_reader($file, $line, $function_name) {
 
     fseek($fh, $seek, SEEK_SET);
     $fgets = fgets($fh);
-    $pos = strpos($fgets, $function_name);
+    $pos = strpos($fgets, $function_name.'(');
     $string = trim($fgets) . $string;
 
     if (false !== $pos) {

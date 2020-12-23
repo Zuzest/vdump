@@ -5,7 +5,7 @@
  * @param  [type] $debug_backtrace [description]
  * @return [type]                  [description]
  */
-function vdump_view($debug_backtrace) {
+function vdump_view($debug_backtrace, $htmlentities = false) {
   $arr = vdump_parse_debug_backtrace($debug_backtrace);
 
   ob_start();
@@ -20,15 +20,9 @@ function vdump_view($debug_backtrace) {
     }
 
   } elseif (!CLI) {
-    vdump_view_web($arr);
+    vdump_view_web($arr, $htmlentities);
   } else {
-    echo "\n\033[0;36m".$arr['file'].":\033[0m";
-    foreach ($arr['args'] as $v) {
-      echo "\n\033[0;33mСтрока:".$arr['line']." >\033[0;32m ".trim($v['name'])." > \033[0m";
-      echo "\n";
-      var_dump($v['var']);
-      echo "\033[0;32m- - - - - - - - - - - - \033[0m\n";
-    }
+    vdump_view_cli($arr);
   }
   $string = ob_get_clean();
 
