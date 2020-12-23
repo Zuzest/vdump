@@ -27,7 +27,7 @@ function vdump_view($debug_backtrace, $htmlentities = false) {
   $string = ob_get_clean();
 
   if (!DEV) {
-    $_file = __DIR__.'/log/vdump.log';
+    $_file = __DIR__.'/../log/vdump.log';
     file_put_contents($_file, $string, FILE_APPEND);
     chmod($_file, 0664);
   } else {

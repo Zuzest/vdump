@@ -1,0 +1,16 @@
+{
+    "name": "zezst/vdump",
+    "type": "project",
+    "license": "free",
+    "authors": [
+        {
+            "name": "Ruslan",
+            "email": "russocomp.zezst@gmail.com"
+        }
+    ],
+    "minimum-stability": "RC",
+    "require": {},
+    "autoload":{
+        "files":["vdump.php"]
+    }
+}
