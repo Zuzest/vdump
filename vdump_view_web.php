@@ -1,12 +1,12 @@
 <?php
 
 /**
- * [vdump_view_web]
- * @param  [type] $parse_backtrace [description]
- * @return [type]                  [description]
+ * Forming a view for output
+ * @param array $parse_backtrace
+ * @param bool $htmlentities
  */
-function vdump_view_web($parse_backtrace, $htmlentities) {
-
+function vdump_view_web(array $parse_backtrace,bool $htmlentities)
+{
   echo "<div style='width:auto;font-size:10pt;background-color:#323B44;padding:.3em;'>";
   echo '<style>body{margin:0;padding:0;}</style>';
   echo "<div style='width: auto;min-width: 50em;max-width: 120em;margin: 0 auto;padding: 0 3em;'>";

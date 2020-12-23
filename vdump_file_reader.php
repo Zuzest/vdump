@@ -1,14 +1,15 @@
 <?php
 
 /**
- * [vdump_file_reader] читает файл в месте вызова функции
- * @param  [string] $file          [description]
- * @param  [int] $line          [description]
- * @param  [string] $function_name [description]
- * @return [string]                [description]
- */
-function vdump_file_reader($file, $line, $function_name) {
-
+  * Reads the file at the location of the function call
+  * читает файл в месте вызова функции
+  * @param string $file
+  * @param int $line
+  * @param string $function_name
+  * @return string
+  */
+function vdump_file_reader(string $file, int $line, string $function_name) : string
+{
   static $files_array = [];
 
   $fh = fopen($file, "r");

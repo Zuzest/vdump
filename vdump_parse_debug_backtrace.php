@@ -1,6 +1,13 @@
 <?php
 
-function vdump_parse_debug_backtrace($debug_backtrace) {
+/**
+ * Parses debug backtrace|
+ * анализирует обратную трассировку отладки
+ * @param array $debug_backtrace
+ * @return array
+ */
+function vdump_parse_debug_backtrace(array $debug_backtrace) : array
+{
   extract($debug_backtrace);
   $string = vdump_file_reader($file, $line, $function);
 

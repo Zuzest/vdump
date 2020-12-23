@@ -1,11 +1,12 @@
 <?php
 
 /**
- * [vdump_view]
- * @param  [type] $debug_backtrace [description]
- * @return [type]                  [description]
+ * Outputs information to a stream or file
+ * @param array $debug_backtrace
+ * @param bool $htmlentities
  */
-function vdump_view($debug_backtrace, $htmlentities = false) {
+function vdump_view(array $debug_backtrace, $htmlentities = false)
+{
   $arr = vdump_parse_debug_backtrace($debug_backtrace);
 
   ob_start();
