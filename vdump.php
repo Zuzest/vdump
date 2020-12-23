@@ -1,97 +1,22 @@
 <?php
-date_default_timezone_set('Europe/Moscow'); //optional
-define('CLI', php_sapi_name() === 'cli');
-defined('ZDEV') or define('ZDEV', true); // ZDEV === true режим отладки
 
-if (ZDEV) {
-  // header("HTTP/1.0 404 Not Found"); //optional
-  ini_set('display_errors', 1);
-} else {
-  ini_set('display_errors', 0);
-}
-error_reporting(E_ALL);
+require_once __DIR__ .'/.const.php';
+require_once __DIR__ .'/vdump_find_name_variables.php';
+require_once __DIR__ .'/vdump_file_reader.php';
 
 function vdump()
 {
   $d = debug_backtrace();
   $d = $d[0];
+
   extract($d);
   $ffile = file($file, FILE_IGNORE_NEW_LINES);
-  array_unshift($ffile, '');
-  unset($ffile[0]);
-  $c  = $line;
-  $as = [];
-  while (true) {
-    $s   = $ffile[$c];
-    $pos = strpos($s, $function);
-    if (false === $pos) {
-      --$c;
-      array_unshift($as, trim($s));
-      continue;
-    }
-    array_unshift($as, trim($s));
-    break;
-  }
-  $s = implode($as);
-  unset($ffile);
-  preg_match('~'.$function."\((.*)\)~", $s, $sa);
-  $_sa = function ($string) {
-    $delimiter    = [','];
-    $open_quotes  = ['\'', '"', '(', '['];
-    $close_quotes = ['\'', '"', ')', ']'];
-    $string       = preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+  $string = vdump_file_reader($file, $line, $function);
 
-    $arr    = [];
-    $quotes = 0;
-    $str    = '';
-    $count  = count($string);
-    foreach ($string as $chars) {
-      --$count;
-      if ($quotes < 1) {
-        if (in_array($chars, $open_quotes)) {
-          $str .= $chars;
-          ++$quotes;
-          continue;
-        }
-        if (in_array($chars, $delimiter)) {
-          $arr[] = $str;
-          $str   = '';
-          continue;
-        }
-        $str .= $chars;
-        if (0 === $count) {
-          $arr[] = $str;
-          $str   = '';
-          continue;
-        }
-      }
-      if ($quotes > 0) {
-        if (in_array($chars, $close_quotes)) {
-          $str .= $chars;
-          if (0 === $count) {
-            $arr[] = $str;
-            $str   = '';
-            continue;
-          }
-          --$quotes;
-          continue;
-        }
-        if (in_array($chars, $open_quotes)) {
-          $str .= $chars;
-          ++$quotes;
-          continue;
-        }
-        $str .= $chars;
-        continue;
-      }
+  $sa = vdump_find_name_variables($string, $function);
 
-    }
-
-    return $arr;
-  };
-  $sa = $_sa($sa[1]);
   ob_start();
-  if (!ZDEV) {
+  if (!DEV) {
     $pt = "\t";
     echo '['.date('Y.m.d').' '.date('H:i:s').'] File \''.$file.'\''.PHP_EOL;
     foreach ($args as $k => $v) {
@@ -144,7 +69,7 @@ function vdump()
   }
   $string = ob_get_clean();
 
-  if (!ZDEV) {
+  if (!DEV) {
     $_file = __DIR__.'/log/vdump.log';
     file_put_contents($_file, $string, FILE_APPEND);
     chmod($_file, 0777);
