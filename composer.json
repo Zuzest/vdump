@@ -11,6 +11,6 @@
     "minimum-stability": "RC",
     "require": {},
     "autoload":{
-        "files":["vdump.php"]
+        "files":["src/vdump.php"]
     }
 }
